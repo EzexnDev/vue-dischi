@@ -3,22 +3,32 @@ const app = new Vue({
     data: {
         url: "https://flynn.boolean.careers/exercises/api/array/music",
         elements: null,
+        filteredElements: null,
+        filterInput: '',
+        filteredGenres: new Set(),
     },
     mounted: function() {
-            axios
-                .get("https://flynn.boolean.careers/exercises/api/array/music")
-                .then(response => (this.elements = response.data.response));
-            console.log(this.elements);
-        }
-        // mounted() {
-        //     for (i = 0; i < 10; i++) {
-        //         axios.get(this.url).then((result) => {
-        //             this.emailsList.push(result.data.response)
-        //         });
-        //     }
-        //     console.log(this.emailsList);
+        axios
+            .get("https://flynn.boolean.careers/exercises/api/array/music")
+            .then(response => {
+                (this.elements = response.data.response);
+                this.filteredElements = this.elements;
+                this.filteredGenres = new Set();
+                for (let i = 0; i < this.filteredElements.length; i++) {
+                    this.filteredGenres.add(this.filteredElements[i].genre);
+                    console.log(this.filteredGenres);
+                };
 
-    // },
+            });
+    },
 
-    // methods: {},
+    methods: {
+        filterElements() {
+            if (this.filterInput == null) {
+                this.filteredElements = elements;
+            }
+            this.filteredElements = this.elements.filter((element) => { return element.genre.toLowerCase().includes(this.filterInput.toLowerCase()); });
+            console.log(this.filteredElements);
+        },
+    },
 });

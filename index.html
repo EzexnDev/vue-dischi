@@ -29,12 +29,16 @@
     <header>
         <div class="container">
             <img src="logo.png" alt="logo" />
+
         </div>
     </header>
 
     <div class="cds-container container" id="app">
+        <select class="custom-select" v-model='filterInput' @change=filterElements()>
+            <option v-for='el in filteredGenres'>{{el}}</option>
+          </select>
         <!-- Disco ad esempio -->
-        <div class="cd" v-for='cd in elements'>
+        <div class="cd" v-for='cd in filteredElements'>
             <img :src=cd.poster alt="">
             <h3>{{cd.genre}}</h3>
             <span class="author">{{cd.author}}</span>
